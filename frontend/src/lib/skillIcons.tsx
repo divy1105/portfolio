@@ -1,0 +1,77 @@
+import type { IconType } from "react-icons";
+import {
+  SiAntdesign,
+  SiChartdotjs,
+  SiCss,
+  SiDotnet,
+  SiFastapi,
+  SiFlask,
+  SiFramer,
+  SiGooglegemini,
+  SiHtml5,
+  SiJavascript,
+  SiLeaflet,
+  SiMongodb,
+  SiMysql,
+  SiPandas,
+  SiPhp,
+  SiPostgresql,
+  SiPython,
+  SiReact,
+  SiScikitlearn,
+  SiSqlite,
+  SiTailwindcss,
+  SiTypescript,
+  SiVite,
+} from "react-icons/si";
+import { FaBrain, FaCode, FaCogs, FaDatabase, FaRobot, FaServer } from "react-icons/fa";
+import { TbBrandReactNative } from "react-icons/tb";
+
+type Meta = { Icon: IconType; color: string };
+
+const map: Record<string, Meta> = {
+  python: { Icon: SiPython, color: "#3776AB" },
+  "javascript / typescript": { Icon: SiTypescript, color: "#3178C6" },
+  javascript: { Icon: SiJavascript, color: "#F7DF1E" },
+  typescript: { Icon: SiTypescript, color: "#3178C6" },
+  "c# / .net": { Icon: SiDotnet, color: "#512BD4" },
+  "c# / asp.net": { Icon: SiDotnet, color: "#512BD4" },
+  "html / css": { Icon: SiHtml5, color: "#E34F26" },
+  html: { Icon: SiHtml5, color: "#E34F26" },
+  css: { Icon: SiCss, color: "#1572B6" },
+  fastapi: { Icon: SiFastapi, color: "#009688" },
+  flask: { Icon: SiFlask, color: "#ffffff" },
+  "asp.net": { Icon: SiDotnet, color: "#512BD4" },
+  "ef core": { Icon: SiDotnet, color: "#512BD4" },
+  react: { Icon: SiReact, color: "#61DAFB" },
+  "react native": { Icon: TbBrandReactNative, color: "#61DAFB" },
+  vite: { Icon: SiVite, color: "#646CFF" },
+  hono: { Icon: FaServer, color: "#E36002" },
+  "tailwind css": { Icon: SiTailwindcss, color: "#06B6D4" },
+  tailwind: { Icon: SiTailwindcss, color: "#06B6D4" },
+  "ant design": { Icon: SiAntdesign, color: "#0170FE" },
+  "tanstack router / query": { Icon: SiReact, color: "#FF4154" },
+  "framer motion": { Icon: SiFramer, color: "#0055FF" },
+  "chart.js": { Icon: SiChartdotjs, color: "#FF6384" },
+  leaflet: { Icon: SiLeaflet, color: "#199900" },
+  sqlite: { Icon: SiSqlite, color: "#003B57" },
+  "postgresql (neon)": { Icon: SiPostgresql, color: "#4169E1" },
+  "neon postgres": { Icon: SiPostgresql, color: "#4169E1" },
+  mysql: { Icon: SiMysql, color: "#4479A1" },
+  mongodb: { Icon: SiMongodb, color: "#47A248" },
+  pandas: { Icon: SiPandas, color: "#150458" },
+  "scikit-learn": { Icon: SiScikitlearn, color: "#F7931E" },
+  lightgbm: { Icon: FaBrain, color: "#60A5FA" },
+  "groq api": { Icon: FaRobot, color: "#F55036" },
+  "google gemini": { Icon: SiGooglegemini, color: "#8E75B2" },
+  gemini: { Icon: SiGooglegemini, color: "#8E75B2" },
+  php: { Icon: SiPhp, color: "#777BB4" },
+  "machine learning": { Icon: FaBrain, color: "#60A5FA" },
+  dbms: { Icon: FaDatabase, color: "#38BDF8" },
+  oop: { Icon: FaCogs, color: "#94A3B8" },
+  "rest apis": { Icon: FaServer, color: "#22D3EE" },
+};
+
+export function getSkillIcon(name: string): Meta {
+  return map[name.trim().toLowerCase()] ?? { Icon: FaCode, color: "#7dd3fc" };
+}

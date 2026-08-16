@@ -1,0 +1,633 @@
+<h1>🚨 CrimePulse</h1>
+<p><strong>CrimePulse</strong> turns Chicago’s historical crime data into beat-level forecasts, risk rankings, maps, analytics, and model-feedback views — an MCA project dashboard for crime awareness and forecasting.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>🏙️ <strong>City</strong></td>
+<td>Chicago</td>
+</tr>
+<tr>
+<td>🗺️ <strong>Coverage</strong></td>
+<td>305 police beats</td>
+</tr>
+<tr>
+<td>📊 <strong>Historical data</strong></td>
+<td>7M+ records, 2001–2026</td>
+</tr>
+<tr>
+<td>📅 <strong>Forecast horizon</strong></td>
+<td>Live, on-demand ranges up to 92 days</td>
+</tr>
+<tr>
+<td>💾 <strong>Local data store</strong></td>
+<td>SQLite (<code>feedback.db</code>)</td>
+</tr>
+<tr>
+<td>✉️ <strong>Contact</strong></td>
+<td><a href="mailto:divymakwana375@gmail.com">divymakwana375@gmail.com</a></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ <strong>Disclaimer:</strong> CrimePulse is an educational analytics project. It is not an official Chicago Police Department product, emergency service, or safety recommendation.</p>
+</blockquote>
+<hr>
+<h2>🧭 Current product</h2>
+<p>The app opens on <strong>About Us</strong>, followed by five working product areas:</p>
+<h3>👋 About Us</h3>
+<ul>
+<li>CrimePulse hero, product explanation, strengths, and limitations</li>
+<li>Site-wide header, sidebar, footer, social icons, and contact email</li>
+<li>Responsive mobile drawer</li>
+</ul>
+<h3>📈 Overview</h3>
+<ul>
+<li>Predicted incident total</li>
+<li>Highest-risk beat</li>
+<li>Current risk gauge</li>
+<li>Recent activity</li>
+<li>Beat-level search and crime profile</li>
+<li>Top-10 risky beats chart with sorting</li>
+</ul>
+<h3>🔮 Forecast</h3>
+<ul>
+<li>Live forecast for a selected beat and date range</li>
+<li>Defaults to today through the next 90 days</li>
+<li>Confidence band and summary metrics</li>
+<li>Recursively generates predictions beyond the original pre-generated CSV window</li>
+</ul>
+<h3>📊 Analytics</h3>
+<ul>
+<li>Leaflet crime map with crime-type and area filters</li>
+<li>Real hour-by-day heatmap</li>
+<li>Real time-of-day radar chart</li>
+<li>LightGBM feature-importance chart</li>
+</ul>
+<blockquote>
+<p>🗑️ The earlier DBSCAN hotspot layer was intentionally removed.</p>
+</blockquote>
+<h3>🔄 Retrain and model health</h3>
+<ul>
+<li>Accepts observed crime information and an <code>actual_count</code></li>
+<li>Stores feedback in SQLite</li>
+<li>Compares predicted vs actual counts</li>
+<li>Displays MAE, bias, and model-health charts when observed feedback exists</li>
+</ul>
+<h3>📋 Reports</h3>
+<ul>
+<li>Combined historical sample and user feedback</li>
+<li>Search, filters, pagination, and summary charts</li>
+<li>CSV, JSON, and SQLite downloads</li>
+</ul>
+<hr>
+<h2>🎨 UI and interaction</h2>
+<ul>
+<li>CrimePulse brand and custom SVG mark</li>
+<li>Dark glass/depth visual system</li>
+<li>Manrope and Space Grotesk typography</li>
+<li>Crimson risk accent, teal secondary accent, and blue information accent</li>
+<li>Card tilt, entrance animations, KPI count-up, chart animation, and button feedback</li>
+<li><code>prefers-reduced-motion</code> support</li>
+<li>Desktop and mobile layouts</li>
+</ul>
+<p>💡 Three.js/WebGL effects are not used. A prototype was tested and then removed to keep navigation fast and stable. The current interface uses CSS and lightweight JavaScript motion.</p>
+<hr>
+<h2>🖥️ How to run on Windows</h2>
+<h3>✅ Existing virtual environment</h3>
+<pre><code class="language-powershell">cd C:\Users\DIVY\OneDrive\Desktop\mca\study\sem4\project1\project
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\crime_env\Scripts\Activate.ps1
+
+pip install -r requirements.txt
+python app.py
+</code></pre>
+<p>Open:</p>
+<pre><code class="language-text">http://localhost:5000
+</code></pre>
+<p>📂 All application data paths resolve relative to <code>app.py</code>, so the project folder can be moved to another machine.</p>
+<h3>🆕 Create a new environment</h3>
+<pre><code class="language-powershell">python -m venv crime_env
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\crime_env\Scripts\Activate.ps1
+pip install -r requirements.txt
+python app.py
+</code></pre>
+<hr>
+<h2>📦 Dependencies</h2>
+<p>Pinned in <code>requirements.txt</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Flask</td>
+<td>3.1.3</td>
+</tr>
+<tr>
+<td>pandas</td>
+<td>3.0.1</td>
+</tr>
+<tr>
+<td>NumPy</td>
+<td>2.4.3</td>
+</tr>
+<tr>
+<td>joblib</td>
+<td>1.5.3</td>
+</tr>
+<tr>
+<td>scikit-learn</td>
+<td>1.8.0</td>
+</tr>
+<tr>
+<td>LightGBM</td>
+<td>4.6.0</td>
+</tr>
+</tbody></table>
+<p>Frontend libraries are loaded by the app:</p>
+<table>
+<thead>
+<tr>
+<th>Library</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Chart.js</td>
+<td>4.4</td>
+</tr>
+<tr>
+<td>Leaflet</td>
+<td>1.9.4</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>📁 Project structure</h2>
+<pre><code class="language-text">project/
+├── app.py                         # Flask routes + inline HTML/CSS/JS
+├── beat_crime_predictor.py        # Beat-level crime prediction workflow
+├── crime_forecast_v2.py           # Forecast training/generation workflow
+├── cleanup.py                     # Data cleanup utility
+├── requirements.txt               # Pinned Python dependencies
+├── README.md                      # Complete project documentation
+├── new_plan.md                    # Pointer to this README
+├── report.md                      # Pointer to this README
+├── crimes_sample_500.csv          # Dashboard sample data
+├── feedback.db                    # Local SQLite feedback (generated locally)
+├── static/
+│   └── crimepulse-mark.svg        # Brand mark and favicon
+├── crime_predictor/
+│   ├── pattern_table.pkl          # Historical pattern artifact (local/ignored)
+│   └── crime_type_model.pkl       # Crime-type model when available
+└── forecast_v2/
+    ├── beat_forecast_90days_v2.csv
+    └── forecast_model_v2.pkl      # Bootstrapped locally if missing
+</code></pre>
+<p>🔒 Large datasets, local feedback, the virtual environment, and generated model artifacts are excluded from Git where appropriate.</p>
+<hr>
+<h2>🗄️ Data</h2>
+<h3>🔗 Source</h3>
+<p><a href="https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2">Chicago Data Portal — Crimes 2001 to Present</a></p>
+<h3>📑 Dataset summary</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Original file</td>
+<td><code>Crimes_-_2001_to_Present_20260312.csv</code></td>
+</tr>
+<tr>
+<td>Original size</td>
+<td>Approximately 2.20 GB</td>
+</tr>
+<tr>
+<td>Records</td>
+<td>Approximately 7 million</td>
+</tr>
+<tr>
+<td>Columns</td>
+<td>22</td>
+</tr>
+<tr>
+<td>Date range</td>
+<td>2001–2026</td>
+</tr>
+<tr>
+<td>Police beats</td>
+<td>305</td>
+</tr>
+<tr>
+<td>Crime types</td>
+<td>33 total; top 15 used for classification</td>
+</tr>
+</tbody></table>
+<p>Important source columns:</p>
+<ul>
+<li><code>Date</code></li>
+<li><code>Primary Type</code></li>
+<li><code>Beat</code></li>
+<li><code>District</code></li>
+<li><code>Ward</code></li>
+<li><code>Community Area</code></li>
+<li><code>Arrest</code></li>
+<li><code>Location Description</code></li>
+<li><code>Latitude</code></li>
+<li><code>Longitude</code></li>
+</ul>
+<h3>🧹 Cleaning</h3>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Handling</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Missing latitude/longitude</td>
+<td>Median imputation</td>
+</tr>
+<tr>
+<td>Missing location description</td>
+<td>Filled with <code>OTHER</code></td>
+</tr>
+<tr>
+<td>Duplicate rows</td>
+<td>Removed</td>
+</tr>
+<tr>
+<td>Date strings</td>
+<td>Parsed into year, month, day, hour, and weekday</td>
+</tr>
+<tr>
+<td>Coordinate outliers</td>
+<td>Restricted to valid Chicago bounds</td>
+</tr>
+</tbody></table>
+<p>📦 The full cleaned dataset is too large for normal GitHub storage and is not included in the repository.</p>
+<hr>
+<h2>⚙️ Feature engineering</h2>
+<p>Features derived from time and location include:</p>
+<ul>
+<li><code>Month</code>, <code>Hour</code>, and <code>DayOfWeek</code></li>
+<li><code>IsWeekend</code></li>
+<li><code>IsNight</code></li>
+<li><code>IsRushHour</code></li>
+<li><code>Beat_Hour</code></li>
+<li><code>District_Hour</code></li>
+<li><code>Hour_sin</code> / <code>Hour_cos</code></li>
+<li><code>Month_sin</code> / <code>Month_cos</code></li>
+<li><code>beat_month_avg</code></li>
+<li><code>beat_dow_avg</code></li>
+<li>lag and rolling features for recursive forecasting</li>
+</ul>
+<hr>
+<h2>🤖 Models and results</h2>
+<h3>🏷️ Crime-type prediction</h3>
+<p><strong>Goal:</strong> predict the most likely crime type from location and time.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th align="right">Approximate accuracy</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Logistic Regression</td>
+<td align="right">25%</td>
+<td>Baseline</td>
+</tr>
+<tr>
+<td>Random Forest</td>
+<td align="right">40%</td>
+<td>Improved nonlinear model</td>
+</tr>
+<tr>
+<td>LightGBM</td>
+<td align="right">40%</td>
+<td>Best trained classifier</td>
+</tr>
+<tr>
+<td>Neural Network</td>
+<td align="right">36%</td>
+<td>Overfit</td>
+</tr>
+<tr>
+<td>Historical beat/month pattern</td>
+<td align="right">60%+</td>
+<td>Best overall approach</td>
+</tr>
+</tbody></table>
+<p>🎲 With 15 target classes, random guessing is approximately 6.6%. Historical beat and month patterns produced the strongest crime-type result.</p>
+<h3>📉 Crime-count forecasting</h3>
+<p><strong>Goal:</strong> forecast daily crimes for a beat and date.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th align="right">MAE</th>
+<th align="right">RMSE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Gradient Boosting V1</td>
+<td align="right">Approximately 2.1</td>
+<td align="right">Approximately 3.2</td>
+</tr>
+<tr>
+<td>LightGBM V2</td>
+<td align="right">1.06</td>
+<td align="right">1.49</td>
+</tr>
+</tbody></table>
+<p>✨ An MAE of 1.06 means the daily beat-level forecast differs from the observed count by approximately one crime on average in the reported evaluation.</p>
+<p><strong>Top forecast drivers:</strong></p>
+<ol>
+<li><code>beat_dow_avg</code></li>
+<li><code>day</code></li>
+<li><code>year</code></li>
+<li><code>weekofyear</code></li>
+<li><code>beat_month_avg</code></li>
+</ol>
+<hr>
+<h2>🔍 Example beat insights</h2>
+<h3>Beat 1925</h3>
+<pre><code class="language-text">Expected crimes: approximately 1 per day
+Likely crime: THEFT
+Historical pattern probability: approximately 57%
+Reported risk rank: 58 of 305
+</code></pre>
+<h3>Beat 1834</h3>
+<pre><code class="language-text">Expected crimes: approximately 7 per day
+Likely crime: THEFT
+Historical pattern probability: approximately 70%
+Reported risk rank: 1 of 305
+Original 90-day forecast: 568 crimes
+</code></pre>
+<h3>Beat 123</h3>
+<pre><code class="language-text">Expected crimes: approximately 4 per day
+Likely crime: THEFT
+Historical pattern probability: approximately 67%
+Reported risk rank: 2 of 305
+</code></pre>
+<hr>
+<h2>🏆 Original top-10 forecast snapshot</h2>
+<p>This table describes the saved 90-day forecast snapshot used in the project report. Live on-demand results vary with the requested date range.</p>
+<table>
+<thead>
+<tr>
+<th align="right">Rank</th>
+<th align="right">Beat</th>
+<th align="right">Predicted crimes</th>
+<th>Top crime</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">1</td>
+<td align="right">1834</td>
+<td align="right">568</td>
+<td>THEFT</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">123</td>
+<td align="right">439</td>
+<td>THEFT</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="right">421</td>
+<td align="right">425</td>
+<td>BATTERY</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">1831</td>
+<td align="right">395</td>
+<td>THEFT</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="right">823</td>
+<td align="right">378</td>
+<td>BATTERY</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td align="right">1924</td>
+<td align="right">370</td>
+<td>BATTERY</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td align="right">612</td>
+<td align="right">362</td>
+<td>BATTERY</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="right">631</td>
+<td align="right">362</td>
+<td>BATTERY</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td align="right">624</td>
+<td align="right">359</td>
+<td>BATTERY</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td align="right">331</td>
+<td align="right">358</td>
+<td>BATTERY</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>🏗️ Architecture</h2>
+<p><code>app.py</code> contains the Flask backend and the inline frontend (HTML/CSS/JS served from one process). Diagrams below use <a href="https://mermaid.js.org/">Mermaid</a> and render in GitHub and Cursor preview.</p>
+<h3>🖥️ System architecture</h3>
+<pre><code class="language-mermaid">flowchart LR
+  Browser[&quot;Browser&lt;br/&gt;Chart.js · Leaflet · CSS/JS UI&quot;]
+  Flask[&quot;Flask app.py&lt;br/&gt;Routes + inline frontend&quot;]
+  APIs[&quot;JSON APIs&lt;br/&gt;/api/*&quot;]
+  Static[&quot;static/&lt;br/&gt;crimepulse-mark.svg&quot;]
+  Sample[&quot;crimes_sample_500.csv&quot;]
+  ForecastCSV[&quot;forecast_v2/&lt;br/&gt;beat_forecast_90days_v2.csv&quot;]
+  ForecastPkl[&quot;forecast_v2/&lt;br/&gt;forecast_model_v2.pkl&quot;]
+  Pattern[&quot;crime_predictor/&lt;br/&gt;pattern_table.pkl&quot;]
+  ModelPkl[&quot;crime_predictor/&lt;br/&gt;crime_type_model.pkl&quot;]
+  DB[&quot;feedback.db&lt;br/&gt;SQLite&quot;]
+
+  Browser --&gt;|&quot;GET /&quot;| Flask
+  Browser --&gt;|&quot;fetch /api/*&quot;| APIs
+  Flask --&gt; APIs
+  Flask --&gt; Static
+  APIs --&gt; Sample
+  APIs --&gt; ForecastCSV
+  APIs --&gt; ForecastPkl
+  APIs --&gt; Pattern
+  APIs --&gt; ModelPkl
+  APIs --&gt; DB
+</code></pre>
+<h3>🧭 App navigation map</h3>
+<p>Single-page dashboard: header buttons call <code>showPage(...)</code> to swap views (no separate URL per page).</p>
+<pre><code class="language-mermaid">flowchart LR
+  About[&quot;About Us&quot;] --&gt; Overview[&quot;Overview&quot;]
+  Overview --&gt; Forecast[&quot;Forecast&quot;]
+  Forecast --&gt; Analytics[&quot;Analytics&quot;]
+  Analytics --&gt; Retrain[&quot;Retrain&quot;]
+  Retrain --&gt; Reports[&quot;Reports&quot;]
+
+  About -.-&gt; Forecast
+  About -.-&gt; Analytics
+  About -.-&gt; Overview
+</code></pre>
+<h3>🔮 Live forecast request flow</h3>
+<pre><code class="language-mermaid">sequenceDiagram
+  participant User
+  participant UI as Forecast page
+  participant API as /api/forecast-data
+  participant Live as live_forecast_series()
+  participant Artifacts as CSV + forecast_model_v2.pkl
+  participant Chart as Chart.js
+
+  User-&gt;&gt;UI: Select beat + from/to dates
+  UI-&gt;&gt;API: GET ?beat=&amp;from=&amp;to=
+  Note over API: Max range 92 days&lt;br/&gt;Default: today → +90 days
+  API-&gt;&gt;Live: beat, frm_dt, to_dt
+  Live-&gt;&gt;Artifacts: Load history + model
+  Live--&gt;&gt;API: predicted daily series
+  API--&gt;&gt;UI: JSON dates + predicted
+  UI-&gt;&gt;Chart: Render forecast + confidence band
+</code></pre>
+<h3>🔌 Main API routes</h3>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/api/top-beats</code></td>
+<td>Top risky beats</td>
+</tr>
+<tr>
+<td><code>/api/beat-detail</code></td>
+<td>Beat profile</td>
+</tr>
+<tr>
+<td><code>/api/forecast-data</code></td>
+<td>Live date-range forecast</td>
+</tr>
+<tr>
+<td><code>/api/recent-activity</code></td>
+<td>Overview feed</td>
+</tr>
+<tr>
+<td><code>/api/map-data</code></td>
+<td>Filtered map markers</td>
+</tr>
+<tr>
+<td><code>/api/heatmap</code></td>
+<td>Real hour-by-day matrix</td>
+</tr>
+<tr>
+<td><code>/api/radar</code></td>
+<td>Time-of-day crime pattern</td>
+</tr>
+<tr>
+<td><code>/api/feature-importance</code></td>
+<td>Model explainability</td>
+</tr>
+<tr>
+<td><code>/api/model-metrics</code></td>
+<td>Prediction-vs-actual metrics</td>
+</tr>
+<tr>
+<td><code>/api/feedback</code></td>
+<td>Save feedback and observed count</td>
+</tr>
+<tr>
+<td><code>/api/feedback-list</code></td>
+<td>Feedback records</td>
+</tr>
+<tr>
+<td><code>/api/merged-data</code></td>
+<td>Combined report data</td>
+</tr>
+<tr>
+<td><code>/api/download-combined-csv</code></td>
+<td>CSV export</td>
+</tr>
+<tr>
+<td><code>/api/download-combined-json</code></td>
+<td>JSON export</td>
+</tr>
+<tr>
+<td><code>/api/feedback-download</code></td>
+<td>SQLite download</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>⚠️ Limitations</h2>
+<ul>
+<li>Forecasts are estimates and may differ from actual events.</li>
+<li>Crime patterns can change due to policy, reporting, seasonality, and external events.</li>
+<li>The dashboard sample does not contain every full-dataset row.</li>
+<li>Internet access is required for map tiles, web fonts, and CDN frontend libraries.</li>
+<li>The local Flask development server is for development/demo use.</li>
+<li>CrimePulse must not be used as emergency or official police guidance.</li>
+</ul>
+<hr>
+<h2>🎯 Final project outcome</h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Crime-count prediction</td>
+<td>LightGBM V2, reported MAE 1.06</td>
+</tr>
+<tr>
+<td>Crime-type prediction</td>
+<td>Historical pattern approach, reported 60%+</td>
+</tr>
+<tr>
+<td>Beat risk ranking</td>
+<td>305 beats</td>
+</tr>
+<tr>
+<td>Forecast</td>
+<td>Live on-demand range up to 92 days</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td>Map, heatmap, radar, feature importance</td>
+</tr>
+<tr>
+<td>Feedback</td>
+<td>SQLite prediction-vs-actual workflow</td>
+</tr>
+<tr>
+<td>Web product</td>
+<td>Responsive Flask dashboard</td>
+</tr>
+</tbody></table>
+<p>CrimePulse combines a complete ML workflow with a browser-based product suitable for project demonstration, model explanation, and beat-level crime-pattern exploration.</p>

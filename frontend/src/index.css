@@ -1,0 +1,735 @@
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/dm-sans";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --paper: #e8e0d4;
+  --wash: #f3eee6;
+  --ink: #1a1814;
+  --ink-muted: #5c564c;
+  --sage: #5a6b4e;
+  --sage-soft: #8a9a7a;
+  --line: #d0c4b0;
+  --surface: #efe8dc;
+}
+
+html.dark {
+  color-scheme: dark;
+  --paper: #221f1c;
+  --wash: #2c2a27;
+  --ink: #f3eee6;
+  --ink-muted: #c4b8a4;
+  --sage: #8a9a7a;
+  --sage-soft: #b4c0a8;
+  --line: #4a433a;
+  --surface: #2c2a27;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-body antialiased;
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+/* Warm paper grain — atmosphere without flat color */
+.studio-grain {
+  position: relative;
+}
+
+.studio-grain::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  opacity: 0.045;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+html.dark .studio-grain::before {
+  opacity: 0.07;
+  mix-blend-mode: soft-light;
+}
+
+.studio-wash {
+  background:
+    radial-gradient(ellipse 80% 55% at 12% 8%, rgba(90, 107, 78, 0.14), transparent 55%),
+    radial-gradient(ellipse 60% 45% at 88% 18%, rgba(176, 154, 120, 0.12), transparent 50%),
+    linear-gradient(165deg, var(--wash) 0%, var(--paper) 48%, #ddd4c4 100%);
+}
+
+html.dark .studio-wash {
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 10%, rgba(138, 154, 122, 0.22), transparent 55%),
+    radial-gradient(ellipse 55% 45% at 90% 15%, rgba(212, 163, 90, 0.18), transparent 50%),
+    linear-gradient(165deg, #2c2a27 0%, #221f1c 55%, #161412 100%);
+}
+
+@layer components {
+  .section {
+    @apply relative mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 lg:px-10;
+  }
+
+  .section-wide {
+    @apply relative mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-12;
+  }
+
+  /* Custom palette via theme() — @apply bg-sage-* fails in some PostCSS builds */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold transition;
+    background-color: theme("colors.sage.500");
+    color: theme("colors.linen.50");
+  }
+  .btn-primary:hover {
+    background-color: theme("colors.sage.600");
+  }
+  html.dark .btn-primary {
+    background-color: theme("colors.sage.400");
+    color: theme("colors.ink.900");
+  }
+  html.dark .btn-primary:hover {
+    background-color: theme("colors.sage.300");
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border bg-transparent px-5 py-2.5 text-sm font-medium transition;
+    border-color: theme("colors.linen.300");
+    color: theme("colors.ink.800");
+  }
+  .btn-ghost:hover {
+    border-color: theme("colors.sage.500");
+    color: theme("colors.sage.600");
+  }
+  html.dark .btn-ghost {
+    border-color: theme("colors.ink.600");
+    color: theme("colors.linen.100");
+  }
+  html.dark .btn-ghost:hover {
+    border-color: theme("colors.sage.300");
+    color: theme("colors.sage.200");
+  }
+
+  .section-eyebrow {
+    @apply mb-3 font-body text-xs font-semibold uppercase tracking-[0.22em];
+    color: theme("colors.sage.500");
+  }
+  html.dark .section-eyebrow {
+    color: theme("colors.sage.300");
+  }
+
+  .surface {
+    border: 1px solid color-mix(in srgb, theme("colors.linen.300") 80%, transparent);
+    background-color: color-mix(in srgb, theme("colors.linen.50") 70%, transparent);
+  }
+  html.dark .surface {
+    border-color: color-mix(in srgb, theme("colors.ink.700") 80%, transparent);
+    background-color: color-mix(in srgb, theme("colors.studio.duskSoft") 80%, transparent);
+  }
+
+  .input-field {
+    @apply w-full rounded-md border px-4 py-3 outline-none transition;
+    border-color: theme("colors.linen.300");
+    background-color: theme("colors.linen.50");
+    color: theme("colors.ink.900");
+  }
+  .input-field::placeholder {
+    color: theme("colors.ink.400");
+  }
+  .input-field:focus {
+    border-color: theme("colors.sage.500");
+  }
+  html.dark .input-field {
+    border-color: theme("colors.ink.700");
+    background-color: theme("colors.studio.duskSoft");
+    color: theme("colors.linen.50");
+  }
+  html.dark .input-field:focus {
+    border-color: theme("colors.sage.400");
+  }
+
+  .chip {
+    @apply rounded-md border px-3 py-1.5 text-xs font-medium transition;
+    border-color: theme("colors.linen.300");
+    background-color: theme("colors.linen.50");
+    color: theme("colors.ink.700");
+  }
+  .chip-active {
+    border-color: theme("colors.sage.500");
+    background-color: theme("colors.sage.500");
+    color: theme("colors.linen.50");
+  }
+  html.dark .chip {
+    border-color: theme("colors.ink.700");
+    background-color: theme("colors.studio.duskSoft");
+    color: theme("colors.linen.200");
+  }
+  html.dark .chip-active {
+    border-color: theme("colors.sage.400");
+    background-color: theme("colors.sage.400");
+    color: theme("colors.ink.900");
+  }
+
+  /* Filter chips: neon trail on inactive only */
+  .chip.neon-edge::after {
+    background: theme("colors.linen.50");
+  }
+  html.dark .chip.neon-edge::after {
+    background: theme("colors.studio.duskSoft");
+  }
+
+  .readme-body {
+    @apply max-w-none;
+    color: theme("colors.ink.700");
+  }
+  html.dark .readme-body {
+    color: theme("colors.linen.200");
+  }
+
+  .readme-body h1,
+  .readme-body h2,
+  .readme-body h3 {
+    @apply font-heading mb-3 mt-6 font-semibold;
+    color: theme("colors.ink.900");
+  }
+  html.dark .readme-body h1,
+  html.dark .readme-body h2,
+  html.dark .readme-body h3 {
+    color: theme("colors.linen.50");
+  }
+
+  .readme-body a {
+    @apply underline underline-offset-2;
+    color: theme("colors.sage.600");
+  }
+  html.dark .readme-body a {
+    color: theme("colors.sage.300");
+  }
+
+  .readme-body code {
+    @apply rounded px-1;
+    background-color: theme("colors.linen.200");
+    color: theme("colors.sage.700");
+  }
+  html.dark .readme-body code {
+    background-color: theme("colors.ink.800");
+    color: theme("colors.sage.200");
+  }
+
+  .readme-body pre {
+    @apply overflow-x-auto rounded-md p-4 text-sm;
+    background-color: theme("colors.ink.900");
+    color: theme("colors.linen.100");
+  }
+
+  .readme-body ul {
+    @apply list-disc space-y-1 pl-5;
+  }
+
+  .readme-body p {
+    @apply mb-3 leading-relaxed;
+  }
+
+  .readme-body table {
+    @apply my-4 w-full border-collapse text-sm;
+  }
+
+  .readme-body th,
+  .readme-body td {
+    @apply px-3 py-2 text-left align-top;
+    border: 1px solid theme("colors.linen.300");
+  }
+  html.dark .readme-body th,
+  html.dark .readme-body td {
+    border-color: theme("colors.ink.700");
+  }
+
+  .readme-body th {
+    @apply font-semibold;
+    background-color: theme("colors.linen.100");
+    color: theme("colors.ink.900");
+  }
+  html.dark .readme-body th {
+    background-color: theme("colors.ink.800");
+    color: theme("colors.linen.50");
+  }
+
+  .readme-body blockquote {
+    @apply my-4 border-l-4 px-4 py-2;
+    border-color: theme("colors.sage.400");
+    background-color: theme("colors.linen.100");
+    color: theme("colors.ink.700");
+  }
+  html.dark .readme-body blockquote {
+    background-color: theme("colors.ink.800");
+    color: theme("colors.linen.200");
+  }
+
+  .readme-body img {
+    @apply my-4 max-w-full rounded-md;
+  }
+
+  .shimmer {
+    @apply relative overflow-hidden;
+    background-color: theme("colors.linen.200");
+  }
+  html.dark .shimmer {
+    background-color: theme("colors.ink.800");
+  }
+
+  .shimmer::after {
+    content: "";
+    @apply absolute inset-0 -translate-x-full;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.45),
+      transparent
+    );
+    animation: shimmer-slide 1.4s ease-in-out infinite;
+  }
+
+  html.dark .shimmer::after {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.08),
+      transparent
+    );
+  }
+}
+
+@keyframes shimmer-slide {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@property --neon-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes neon-orbit {
+  to {
+    --neon-angle: 360deg;
+  }
+}
+
+/* Hover neon that runs around the card border */
+.neon-card {
+  position: relative;
+  isolation: isolate;
+  border-radius: 0.375rem;
+  overflow: hidden;
+}
+
+.neon-card::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  background: conic-gradient(
+    from var(--neon-angle),
+    transparent 0%,
+    transparent 58%,
+    #c45c4a 64%,
+    #d4a35a 70%,
+    #c45c4a 76%,
+    transparent 82%
+  );
+  animation: neon-orbit 1.6s linear infinite;
+  animation-play-state: paused;
+}
+
+.neon-card::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  z-index: 1;
+  border-radius: inherit;
+  background: theme("colors.linen.100");
+  pointer-events: none;
+}
+
+html.dark .neon-card::before {
+  background: conic-gradient(
+    from var(--neon-angle),
+    transparent 0%,
+    transparent 52%,
+    #3b82f6 58%,
+    #60a5fa 64%,
+    #facc15 70%,
+    #3b82f6 76%,
+    transparent 82%
+  );
+}
+
+html.dark .neon-card::after {
+  background: theme("colors.ink.900");
+}
+
+.group:hover .neon-card::before,
+.neon-card:hover::before {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+.group:hover .neon-card,
+.neon-card:hover {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #c45c4a 32%, transparent),
+    0 0 18px color-mix(in srgb, #c45c4a 22%, transparent),
+    0 0 26px color-mix(in srgb, #d4a35a 16%, transparent);
+}
+
+html.dark .group:hover .neon-card,
+html.dark .neon-card:hover {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #3b82f6 40%, transparent),
+    0 0 18px color-mix(in srgb, #3b82f6 35%, transparent),
+    0 0 28px color-mix(in srgb, #facc15 18%, transparent);
+}
+
+.neon-card-inner {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+/* Compact neon trail — skills, social icons */
+.neon-edge {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  overflow: hidden;
+  border-color: transparent !important;
+}
+
+.neon-edge::before {
+  content: "";
+  position: absolute;
+  inset: -120%;
+  z-index: -2;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  background: conic-gradient(
+    from var(--neon-angle),
+    transparent 0%,
+    transparent 55%,
+    #c45c4a 62%,
+    #d4a35a 70%,
+    #c45c4a 78%,
+    transparent 85%
+  );
+  animation: neon-orbit 1.4s linear infinite;
+  animation-play-state: paused;
+}
+
+.neon-edge::after {
+  content: "";
+  position: absolute;
+  inset: 1.5px;
+  z-index: -1;
+  border-radius: inherit;
+  background: theme("colors.linen.50");
+  pointer-events: none;
+}
+
+html.dark .neon-edge::before {
+  background: conic-gradient(
+    from var(--neon-angle),
+    transparent 0%,
+    transparent 50%,
+    #3b82f6 58%,
+    #60a5fa 64%,
+    #facc15 72%,
+    #3b82f6 78%,
+    transparent 86%
+  );
+}
+
+html.dark .neon-edge::after {
+  background: theme("colors.studio.duskSoft");
+}
+
+.neon-edge:hover::before,
+.neon-edge:focus-visible::before {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+.neon-edge:hover,
+.neon-edge:focus-visible {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #c45c4a 38%, transparent),
+    0 0 12px color-mix(in srgb, #c45c4a 24%, transparent),
+    0 0 16px color-mix(in srgb, #d4a35a 14%, transparent);
+  color: theme("colors.ink.900");
+}
+
+html.dark .neon-edge:hover,
+html.dark .neon-edge:focus-visible {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #3b82f6 45%, transparent),
+    0 0 12px color-mix(in srgb, #3b82f6 35%, transparent),
+    0 0 18px color-mix(in srgb, #facc15 16%, transparent);
+  color: theme("colors.linen.50");
+}
+
+/* Buttons — glow + light that runs across on hover */
+.btn-primary,
+.btn-ghost {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn-primary::before,
+.btn-ghost::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  transition: opacity 0.2s ease;
+  /* Light: soft gold only (#D4A35A) — premium, not coral flash */
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 40%,
+    color-mix(in srgb, #d4a35a 45%, transparent) 46%,
+    color-mix(in srgb, #d4a35a 65%, transparent) 52%,
+    transparent 62%,
+    transparent 100%
+  );
+  background-size: 220% 100%;
+  background-position: 120% 0;
+}
+
+html.dark .btn-primary::before,
+html.dark .btn-ghost::before {
+  mix-blend-mode: screen;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 38%,
+    color-mix(in srgb, #3b82f6 65%, transparent) 48%,
+    color-mix(in srgb, #facc15 55%, transparent) 54%,
+    transparent 64%,
+    transparent 100%
+  );
+  background-size: 220% 100%;
+  background-position: 120% 0;
+}
+
+@keyframes neon-sweep {
+  to {
+    background-position: -120% 0;
+  }
+}
+
+.btn-primary:hover::before,
+.btn-ghost:hover::before,
+.btn-primary:focus-visible::before,
+.btn-ghost:focus-visible::before {
+  opacity: 1;
+  animation: neon-sweep 1.15s linear infinite;
+}
+
+.btn-primary:hover {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #d4a35a 42%, transparent),
+    0 0 16px color-mix(in srgb, #d4a35a 26%, transparent),
+    0 0 20px color-mix(in srgb, #d4a35a 14%, transparent);
+}
+
+.btn-ghost:hover {
+  border-color: color-mix(in srgb, #d4a35a 55%, transparent) !important;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #d4a35a 30%, transparent),
+    0 0 12px color-mix(in srgb, #d4a35a 18%, transparent),
+    0 0 16px color-mix(in srgb, #d4a35a 10%, transparent);
+}
+
+html.dark .btn-primary:hover {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #3b82f6 50%, transparent),
+    0 0 16px color-mix(in srgb, #3b82f6 40%, transparent),
+    0 0 22px color-mix(in srgb, #facc15 20%, transparent);
+}
+
+html.dark .btn-ghost:hover {
+  border-color: color-mix(in srgb, #3b82f6 60%, transparent) !important;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #3b82f6 35%, transparent),
+    0 0 14px color-mix(in srgb, #3b82f6 28%, transparent),
+    0 0 18px color-mix(in srgb, #facc15 14%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neon-card::before,
+  .neon-edge::before {
+    animation: none;
+    background: linear-gradient(
+      135deg,
+      transparent 40%,
+      #c45c4a 50%,
+      transparent 60%
+    );
+  }
+  html.dark .neon-card::before,
+  html.dark .neon-edge::before {
+    background: linear-gradient(
+      135deg,
+      transparent 35%,
+      #3b82f6 48%,
+      #facc15 55%,
+      transparent 65%
+    );
+  }
+  .btn-primary::before,
+  .btn-ghost::before {
+    animation: none !important;
+  }
+}
+
+/* —— Hero atmosphere: dark colored beams (full viewport, not flat black) —— */
+.hero-dark-base {
+  background: linear-gradient(168deg, #2e2b26 0%, #1e1b18 50%, #151310 100%);
+}
+
+.hero-dark-washes {
+  background:
+    radial-gradient(ellipse 55% 50% at 8% 18%, rgba(138, 154, 122, 0.45), transparent 62%),
+    radial-gradient(ellipse 50% 55% at 92% 12%, rgba(212, 163, 90, 0.4), transparent 58%),
+    radial-gradient(ellipse 45% 40% at 78% 48%, rgba(196, 92, 74, 0.18), transparent 60%),
+    radial-gradient(ellipse 70% 45% at 40% 0%, rgba(243, 238, 230, 0.12), transparent 55%),
+    radial-gradient(ellipse 50% 35% at 55% 70%, rgba(90, 107, 78, 0.16), transparent 60%);
+}
+
+.hero-dark-rays {
+  background:
+    linear-gradient(
+      118deg,
+      transparent 28%,
+      rgba(232, 208, 160, 0.22) 36%,
+      rgba(212, 163, 90, 0.28) 42%,
+      rgba(232, 208, 160, 0.1) 48%,
+      transparent 56%
+    ),
+    linear-gradient(
+      125deg,
+      transparent 40%,
+      rgba(196, 92, 74, 0.16) 48%,
+      rgba(212, 163, 90, 0.22) 53%,
+      transparent 62%
+    ),
+    linear-gradient(
+      132deg,
+      transparent 52%,
+      rgba(180, 192, 168, 0.2) 58%,
+      rgba(138, 154, 122, 0.14) 64%,
+      transparent 72%
+    ),
+    linear-gradient(
+      140deg,
+      transparent 62%,
+      rgba(232, 208, 160, 0.18) 68%,
+      transparent 76%
+    );
+}
+
+.hero-dark-grain {
+  opacity: 0.45;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* —— Hero atmosphere: Soft ivory gold (#3) —— */
+.hero-light-base {
+  background: linear-gradient(168deg, #faf6ef 0%, #f0e6d6 55%, #ebe0d0 100%);
+}
+
+.hero-light-washes {
+  background:
+    radial-gradient(ellipse 58% 48% at 14% 24%, rgba(196, 168, 130, 0.16), transparent 62%),
+    radial-gradient(ellipse 50% 42% at 42% 40%, rgba(196, 168, 130, 0.1), transparent 58%),
+    radial-gradient(ellipse 55% 50% at 90% 12%, rgba(212, 163, 90, 0.24), transparent 58%),
+    radial-gradient(ellipse 45% 40% at 78% 55%, rgba(212, 163, 90, 0.12), transparent 60%);
+}
+
+/* Soft directional light — premium warmth, not dark-style beams */
+.hero-light-direction {
+  background:
+    linear-gradient(
+      122deg,
+      transparent 32%,
+      rgba(212, 163, 90, 0.14) 44%,
+      rgba(196, 168, 130, 0.1) 52%,
+      transparent 64%
+    ),
+    linear-gradient(
+      148deg,
+      transparent 46%,
+      rgba(212, 163, 90, 0.1) 58%,
+      transparent 72%
+    );
+}
+
+.hero-light-grain {
+  opacity: 0.09;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+@keyframes hero-scroll-line {
+  0%,
+  100% {
+    transform: scaleY(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scaleY(0.55);
+    opacity: 1;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .hero-name-accent:hover {
+    filter: brightness(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer::after,
+  .studio-hero-media,
+  .neon-card::before,
+  .neon-edge::before,
+  .btn-primary::before,
+  .btn-ghost::before {
+    animation: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
