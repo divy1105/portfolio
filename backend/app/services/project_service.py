@@ -82,7 +82,7 @@ SEED_PROJECTS: list[dict[str, Any]] = [
         "content_html": "",
         "tech": ["React", "Vite", "Tailwind", "FastAPI", "Gemini", "Exa"],
         "github_url": "https://github.com/divy1105/CareerLens",
-        "demo_url": "https://career-lens-alpha.vercel.app",
+        "demo_url": None,
         "featured": True,
         "order": 2,
         "source": "manual",
@@ -105,7 +105,7 @@ SEED_PROJECTS: list[dict[str, Any]] = [
         "tech": ["FastAPI", "React", "Vite", "Neon Postgres", "Groq API"],
         "github_url": "https://github.com/divy1105/Manager_Task_Ai",
         "demo_url": None,
-        "featured": False,
+        "featured": True,
         "order": 4,
         "source": "manual",
     },
@@ -151,6 +151,8 @@ async def _backfill_seed_fields(col: Any, docs: list[dict[str, Any]]) -> bool:
         patch: dict[str, Any] = {}
         if not d.get("github_url") and seed.get("github_url"):
             patch["github_url"] = seed["github_url"]
+        if (d.get("demo_url") or None) != (seed.get("demo_url") or None):
+            patch["demo_url"] = seed.get("demo_url")
         if seed.get("description") and d.get("description") != seed.get("description"):
             patch["description"] = seed["description"]
         seed_html = (seed.get("content_html") or "").strip()
@@ -231,7 +233,20 @@ async def get_public_projects() -> list[dict[str, Any]]:
             and len((p.get("content_html") or "").strip()) < 80
             for p in cached
         )
-        if not thin and not missing_seed:
+        seed_by_title = {p["title"].lower(): p for p in SEED_PROJECTS}
+        demo_stale = any(
+            seed_by_title.get((p.get("title") or "").lower())
+            and (p.get("demo_url") or None)
+            != (seed_by_title[(p.get("title") or "").lower()].get("demo_url") or None)
+            for p in cached
+        )
+        featured_stale = any(
+            seed_by_title.get((p.get("title") or "").lower())
+            and bool(p.get("featured"))
+            != bool(seed_by_title[(p.get("title") or "").lower()].get("featured"))
+            for p in cached
+        )
+        if not thin and not missing_seed and not demo_stale and not featured_stale:
             return cached
     return await rebuild_merged_projects_cache()
 

@@ -25,7 +25,7 @@ export const FALLBACK_PROFILE: Profile = {
   facts: [
     { label: "Current", value: "Data Science Trainee" },
     { label: "Based in", value: "Ahmedabad, IN" },
-    { label: "Highlight", value: "CareerLens live" },
+    { label: "Highlight", value: "CareerLens" },
   ],
   education: [
     {
@@ -122,7 +122,7 @@ export const FALLBACK_PROJECTS: Project[] = [
     description: "AI resume-to-career platform — job match, skill gaps, roadmap, mock interviews",
     tech: ["React", "Vite", "Tailwind", "FastAPI", "Gemini", "Exa"],
     github_url: "https://github.com/divy1105/CareerLens",
-    demo_url: "https://career-lens-alpha.vercel.app",
+    demo_url: null,
     featured: true,
     order: 2,
     source: "manual",
@@ -146,7 +146,7 @@ export const FALLBACK_PROJECTS: Project[] = [
     tech: ["FastAPI", "React", "Vite", "Neon Postgres", "Groq API"],
     github_url: "https://github.com/divy1105/Manager_Task_Ai",
     demo_url: null,
-    featured: false,
+    featured: true,
     order: 4,
     source: "manual",
   },

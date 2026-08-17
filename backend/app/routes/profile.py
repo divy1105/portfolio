@@ -26,7 +26,7 @@ _PROFILE = {
     "facts": [
         {"label": "Current", "value": "Data Science Trainee"},
         {"label": "Based in", "value": "Ahmedabad, IN"},
-        {"label": "Highlight", "value": "CareerLens live"},
+        {"label": "Highlight", "value": "CareerLens"},
     ],
     "education": [
         {

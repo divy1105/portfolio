@@ -83,9 +83,9 @@ Gallery order on `/` (`VISIBLE_PROJECTS` in `frontend/src/lib/projectConfig.ts`)
 | # | Project | Stack | Links |
 |---|---------|--------|--------|
 | 1 | **CrimePulse** (featured) | Python, Flask, LightGBM, Chart.js, Leaflet, SQLite | — |
-| 2 | **CareerLens** (featured) | React, Vite, Tailwind, FastAPI, Gemini, Exa | [GitHub](https://github.com/divy1105/CareerLens) · [Live](https://career-lens-alpha.vercel.app) |
+| 2 | **CareerLens** (featured) | React, Vite, Tailwind, FastAPI, Gemini, Exa | [GitHub](https://github.com/divy1105/CareerLens) |
 | 3 | **TravelMind** (featured) | React, TypeScript, Vite, Hono, Neon Postgres, Tailwind | [GitHub](https://github.com/divy1105/TravelMind) |
-| 4 | Manager_Task_Ai | FastAPI, React, Vite, Neon Postgres, Groq API | [GitHub](https://github.com/divy1105/Manager_Task_Ai) |
+| 4 | **Manager_Task_Ai** (featured) | FastAPI, React, Vite, Neon Postgres, Groq API | [GitHub](https://github.com/divy1105/Manager_Task_Ai) |
 | 5 | Event-Management-System-MCA | C# / ASP.NET, React, TypeScript, Vite, Ant Design | [GitHub](https://github.com/divy1105/Event-Management-System-MCA) |
 | 6 | Sporties | HTML, CSS, JavaScript, PHP, MySQL | — |
 
