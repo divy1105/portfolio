@@ -4,8 +4,8 @@ import axios from 'axios';
 // Agar local PC par run kar rahe hain, toh default localhost:8000 use karega
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-// API client banayein
-export const apiClient = axios.create({
+// API client banayein (Naam yahan 'api' rakhna zaroori hai)
+export const api = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
