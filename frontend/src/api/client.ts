@@ -1,16 +1,13 @@
-import axios from "axios";
+import axios from 'axios';
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || "";
+// Yeh Vercel environment variable se aapke backend ka live URL uthayega
+// Agar local PC par run kar rahe hain, toh default localhost:8000 use karega
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-export const api = axios.create({
-  baseURL,
-  headers: { "Content-Type": "application/json" },
-});
-
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("portfolio_admin_token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+// API client banayein
+export const apiClient = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
