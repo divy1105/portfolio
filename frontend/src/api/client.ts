@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Humne Vercel variable hata kar seedha aapke backend ka live link daal diya hai
-const BASE_URL = 'https://portfolio-8w16cd9ks-divy28study-3042s-projects.vercel.app';
+// Yeh aapka direct Production link hai (Bina kisi redirect aur bina aakhiri slash ke)
+const BASE_URL = 'https://portfolio-bckend.vercel.app';
 
 export const api = axios.create({
   baseURL: BASE_URL,

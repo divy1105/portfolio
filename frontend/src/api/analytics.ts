@@ -13,7 +13,7 @@ export function getSessionId() {
 
 export async function trackEvent(event_type: "page_view" | "resume_download", extra: Record<string, string> = {}) {
   try {
-    await api.post("/api/analytics/event", {
+    await api.post("/api/analytics/event/", {
       event_type,
       session_id: getSessionId(),
       path: window.location.pathname + window.location.hash,
