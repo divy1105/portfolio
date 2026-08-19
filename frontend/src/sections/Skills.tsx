@@ -5,9 +5,12 @@ import SectionHeading from "../components/SectionHeading";
 import { getSkillIcon } from "../lib/skillIcons";
 
 export default function Skills({ profile }: { profile: Profile }) {
-  const categories = useMemo(() => Object.keys(profile.skills), [profile.skills]);
+  // FIX: Added optional chaining and default empty object {} to prevent crash
+  const categories = useMemo(() => Object.keys(profile?.skills || {}), [profile?.skills]);
   const [active, setActive] = useState<string>(categories[0] ?? "");
-  const items = profile.skills[active] ?? [];
+  
+  // FIX: Added optional chaining here too
+  const items = profile?.skills?.[active] ?? [];
 
   return (
     <section id="skills" className="section scroll-mt-24">

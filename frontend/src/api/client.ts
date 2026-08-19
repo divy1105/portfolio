@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-// Yeh Vercel environment variable se aapke backend ka live URL uthayega
-// Agar local PC par run kar rahe hain, toh default localhost:8000 use karega
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+// Humne Vercel variable hata kar seedha aapke backend ka live link daal diya hai
+const BASE_URL = 'https://portfolio-8w16cd9ks-divy28study-3042s-projects.vercel.app';
 
-// API client banayein (Naam yahan 'api' rakhna zaroori hai)
 export const api = axios.create({
   baseURL: BASE_URL,
   headers: {
